@@ -21,6 +21,7 @@ class App extends Component {
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     console.log(app);
+    console.log('Hello');
   }
 
   render() {
