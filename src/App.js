@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {Component, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {Provider} from 'react-redux';
@@ -21,7 +22,11 @@ class App extends Component {
     };
 
     // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    // const app = firebase.initializeApp(firebaseConfig);
     // const app = firebase.initializeApp(firebaseConfig);
     // console.log(app);
     console.log('Hello');

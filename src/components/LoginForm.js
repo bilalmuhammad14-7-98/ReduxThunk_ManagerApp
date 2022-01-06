@@ -1,7 +1,9 @@
+/* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Card, CardSection, Input, Button} from './common';
+import {Card, CardSection, Input, Button, Spinner} from './common';
 import {connect} from 'react-redux';
 import {emailChanged, passwordChanged, LoginUser} from '../actions';
+import {StyleSheet, View, Text} from 'react-native';
 
 class LoginForm extends Component {
   onEmailChange(text) {
@@ -16,6 +18,25 @@ class LoginForm extends Component {
     const {email, password} = this.props;
     this.props.LoginUser({email, password});
   }
+
+  rendorError() {
+    if (this.props.error) {
+      return (
+        <View>
+          <Text style={styles.textStyle}>{this.props.error}</Text>
+        </View>
+      );
+    }
+  }
+
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner size="large" />;
+    }
+
+    return <Button onPress={this.onButtonPress.bind(this)}>Login</Button>;
+  }
+
   render() {
     console.log(this.props.email, 'email');
     console.log(this.props.password, 'password');
@@ -39,18 +60,28 @@ class LoginForm extends Component {
             value={this.props.password}
           />
         </CardSection>
-        <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)}>Login</Button>
-        </CardSection>
+
+        {this.rendorError()}
+        <CardSection>{this.renderButton()}</CardSection>
       </Card>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  textStyle: {
+    fontSize: 18,
+    color: 'red',
+    alignSelf: 'center',
+  },
+});
+
 const mapStateToProps = state => {
   return {
     email: state.auth.email,
     password: state.auth.password,
+    error: state.auth.error,
+    loading: state.auth.loading,
   };
 };
 

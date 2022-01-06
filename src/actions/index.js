@@ -1,5 +1,11 @@
+/* eslint-disable prettier/prettier */
 import {EMAIL_CHANGED} from './types';
-import {PASSWORD_CHANGED, LOGIN_USER_SUCCESS} from './types';
+import {
+  PASSWORD_CHANGED,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAIL,
+  LOGIN_USER,
+} from './types';
 import firebase from 'firebase';
 
 export const emailChanged = text => {
@@ -18,16 +24,25 @@ export const passwordChanged = text => {
 
 export const LoginUser = ({email, password}) => {
   return dispatch => {
-    // firebase.auth().signInWithEmailAndPassword(email, password)
+    dispatch({type: LOGIN_USER});
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        console.log(user, 'user');
-        dispatch({
-          type: LOGIN_USER_SUCCESS,
-          payload: user,
-        });
+      .then(user => LoginUserSuccess(dispatch, user))
+      .catch(() => {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(user => LoginUserSuccess(dispatch, user))
+          .catch(() => LoginUserFail(dispatch));
       });
   };
+};
+
+const LoginUserFail = dispatch => {
+  dispatch({type: LOGIN_USER_FAIL});
+};
+
+const LoginUserSuccess = (dispatch, user) => {
+  dispatch({type: LOGIN_USER_SUCCESS, payload: user});
 };
