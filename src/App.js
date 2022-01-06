@@ -2,12 +2,13 @@
 import React, {Component, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import reducers from './reducers';
 // import * as firebase from 'firebase/app';
 import firebase from 'firebase';
 import LoginForm from './components/LoginForm';
 import ReduxThunk from 'redux-thunk';
+import Router from './Router';
 
 class App extends Component {
   componentDidMount() {
@@ -33,13 +34,18 @@ class App extends Component {
   }
 
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+    const composeEnhancers =
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const store = createStore(
+      reducers,
+      {},
+      composeEnhancers(applyMiddleware(ReduxThunk)),
+    );
+
     return (
       <Provider store={store}>
-        <View>
-          {/* <Text>Hello World</Text> */}
-          <LoginForm />
-        </View>
+        {/* <LoginForm /> */}
+        <Router />
       </Provider>
     );
   }
