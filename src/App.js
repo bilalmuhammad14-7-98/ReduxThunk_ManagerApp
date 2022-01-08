@@ -27,9 +27,7 @@ class App extends Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-    // const app = firebase.initializeApp(firebaseConfig);
-    // const app = firebase.initializeApp(firebaseConfig);
-    // console.log(app);
+
     console.log('Hello');
   }
 
