@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {EMAIL_CHANGED} from './types';
+import {Actions} from 'react-native-router-flux';
 import {
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
@@ -45,4 +46,5 @@ const LoginUserFail = dispatch => {
 
 const LoginUserSuccess = (dispatch, user) => {
   dispatch({type: LOGIN_USER_SUCCESS, payload: user});
+  Actions.main();
 };

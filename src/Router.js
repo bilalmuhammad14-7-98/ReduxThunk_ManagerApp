@@ -12,16 +12,24 @@ const RouterComponent = () => {
     // </Router>
 
     <Router>
-      <Stack key="root">
-        <Scene key="login" component={LoginForm} title="Please Login" initial />
-        <Scene
-          key="employeeList"
-          component={EmployeeList}
-          title="Employee List"
-        />
-        {/* <Scene key="register" component={Register} title="Register" /> */}
-        {/* <Scene key="home" component={Home} /> */}
-      </Stack>
+      <Scene key="root" hideNavBar>
+        <Scene key="auth">
+          <Scene
+            key="login"
+            component={LoginForm}
+            title="Please Login"
+            initial
+          />
+        </Scene>
+
+        <Scene key="main">
+          <Scene
+            key="employeeList"
+            component={EmployeeList}
+            title="Employee List"
+          />
+        </Scene>
+      </Scene>
     </Router>
   );
 };
