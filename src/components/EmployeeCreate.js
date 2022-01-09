@@ -5,8 +5,16 @@ import {Picker} from '@react-native-picker/picker';
 import {Card, CardSection, Input, Button} from './common';
 import EmployeeList from './EmployeeList';
 import {Text, StyleSheet} from 'react-native';
+import {employeeCreate} from '../actions/';
 
 class EmployeeCreate extends Component {
+  onButtonPress() {
+    const {name, phone, shift} = this.props;
+    console.log('yess');
+    console.log({name, phone, shift: shift || 'Monday'}, 'name');
+    this.props.employeeCreate({name, phone, shift});
+  }
+
   render() {
     return (
       <Card>
@@ -31,7 +39,7 @@ class EmployeeCreate extends Component {
           />
         </CardSection>
 
-        <CardSection style={{flexDirection: 'column'}}>
+        <CardSection>
           <Text style={styles.picketTextStyle}>Shift</Text>
           <Picker
             style={{flex: 1}}
@@ -50,7 +58,7 @@ class EmployeeCreate extends Component {
         </CardSection>
 
         <CardSection>
-          <Button>Create</Button>
+          <Button onPress={this.onButtonPress.bind(this)}>Create</Button>
         </CardSection>
       </Card>
     );
@@ -70,4 +78,6 @@ const mapStateToProps = state => {
   return {name, phone, shift};
 };
 
-export default connect(mapStateToProps, {employeeUpdate})(EmployeeCreate);
+export default connect(mapStateToProps, {employeeUpdate, employeeCreate})(
+  EmployeeCreate,
+);
