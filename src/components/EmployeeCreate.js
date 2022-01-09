@@ -4,6 +4,7 @@ import {employeeUpdate} from '../actions/';
 import {Picker} from '@react-native-picker/picker';
 import {Card, CardSection, Input, Button} from './common';
 import EmployeeList from './EmployeeList';
+import {Text, StyleSheet} from 'react-native';
 
 class EmployeeCreate extends Component {
   render() {
@@ -30,7 +31,8 @@ class EmployeeCreate extends Component {
           />
         </CardSection>
 
-        <CardSection>
+        <CardSection style={{flexDirection: 'column'}}>
+          <Text style={styles.picketTextStyle}>Shift</Text>
           <Picker
             style={{flex: 1}}
             selectedValue={this.props.shift}
@@ -54,6 +56,13 @@ class EmployeeCreate extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  picketTextStyle: {
+    fontSize: 18,
+    paddingLeft: 20,
+  },
+});
 
 const mapStateToProps = state => {
   const {name, phone, shift} = state.employeeForm;
