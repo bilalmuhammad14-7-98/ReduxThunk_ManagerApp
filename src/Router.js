@@ -14,8 +14,8 @@ const RouterComponent = () => {
     // </Router>
 
     <Router>
-      <Scene key="root" hideNavBar>
-        <Scene key="auth" initial>
+      <Scene key="root" hideNavBar initial>
+        <Scene key="auth">
           <Scene key="login" component={LoginForm} title="Please Login" />
         </Scene>
 
